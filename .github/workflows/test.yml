@@ -31,7 +31,4 @@ jobs:
           aws ec2 describe-instances \
             --region ap-south-1 \
             --filters "Name=tag:Name,Values=mkm-instance" \
-            --query "Reservations[*].Instances[*].InstanceId" \
-            --output text
-            --query "Reservations[*].Instances[*].InstanceId" \
             --output text
