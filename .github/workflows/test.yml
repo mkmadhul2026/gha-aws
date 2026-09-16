@@ -18,6 +18,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: $ {{ secrets.AWS_GHA_KEY }}
+          aws-region: Global
 
       - name: Get EC2 Instance IDs
         run: |
