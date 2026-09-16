@@ -3,30 +3,34 @@ name: AWS OIDC EC2 Example
 on:
   push:
     branches:
-        -   main
+      - main
 
-permissions:
-  id-token: write   # Required for OIDC
-  contents: read    # Required for actions/checkout
-
-jobs:
-  aws-oidc-ec2:
-    runs-on: [ubuntu-latest]    
 permissions:
   id-token: write
   contents: read
 
-steps:
-  - name: Checkout repository
-    uses: actions/checkout@v4
+jobs:
+  aws-oidc-ec2:
+    runs-on: ubuntu-latest
 
-  - name: Debug OIDC
-    uses: github/actions-oidc-debugger@main
-    with:
-      audience: sts.amazonaws.com
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-  - name: Configure AWS credentials via OIDC
-    uses: aws-actions/configure-aws-credentials@v4
-    with:
-      role-to-assume: arn:aws:iam::390844777938:role/gha-role
-      aws-region: ap-south-1
+      - name: Debug OIDC
+        uses: github/actions-oidc-debugger@main
+        with:
+          audience: sts.amazonaws.com
+
+      - name: Configure AWS credentials via OIDC
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: arn:aws:iam::390844777938:role/gha-role
+          aws-region: ap-south-1
+
+      - name: Get EC2 Instance IDs
+        run: |
+          echo "Fetching EC2 instance IDs..."
+          aws ec2 describe-instances \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text
