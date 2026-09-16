@@ -33,6 +33,6 @@ jobs:
             echo "=== EC2 Instances in ap-south-1 ==="
             aws ec2 describe-instances \
             --region ap-south-1 \
-            --filters "Name=tag:Name,Values=${INSTANCE_NAME}" "Name=instance-state-name,Values=running"
+            --filters "Name=tag:Name,Values=${INSTANCE_NAME}" "Name=instance-state-name,Values=running" \
             --query "Reservations[*].Instances[*].[InstanceId,State.Name,Tags[?Key=='Name']|[0].Value]" \
             --output table    
