@@ -1,4 +1,4 @@
-name: AWS OIDC Test
+name: AWS OIDC EC2
 
 on:
   push:
@@ -11,18 +11,27 @@ permissions:
   contents: read
 
 jobs:
-  test-aws-oidc:
+  aws-oidc-ec2:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: arn:aws:iam::390844777938:role/gha-role
           aws-region: ap-south-1
 
-      - name: Test AWS connection
-        run: aws sts get-caller-identity
+      - name: Verify AWS identity
+        run: |
+          aws sts get-caller-identity
+
+      - name: Get EC2 Instance IDs
+        run: |
+          echo "Fetching EC2 instance IDs..."
+          aws ec2 describe-instances \
+            --region ap-south-1 \
+            --filters "Name=tag:Name,Values=mkm-instance" \
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text
+            --query "Reservations[*].Instances[*].InstanceId" \
+            --output text
