@@ -28,9 +28,8 @@ jobs:
       - name: Get EC2 Instance IDs
         run: |
           echo "Fetching EC2 instance IDs..."
-          INSTANCE_ID =$(aws ec2 describe-instances \
+          INSTANCE_ID=$(aws ec2 describe-instances \
             --region ap-south-1 \
             --filters "Name=tag:Name,Values=mkm-instance" \
             --output text)
           echo "Instance ID is $INSTANCE_ID"
-          
