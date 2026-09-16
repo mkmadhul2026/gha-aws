@@ -17,7 +17,7 @@ jobs:
       - name: Configure AWS credentials via OIDC
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: $ {{ secret.AWS_GHA_KEY }}
+          role-to-assume: arn:aws:iam::390844777938:role/gha-role
           aws-region: ap-south-1
 
       - name: Get EC2 Instance IDs
