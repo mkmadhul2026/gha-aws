@@ -18,6 +18,12 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up AWS CLI
+        run: |
+          pwd
+          ls -la
+          find . -name "requirements.txt"
+
       - name: Set up Python with pip cache
         uses: actions/setup-python@v5
         with:
