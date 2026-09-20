@@ -4,3 +4,4 @@ selenium
 awscli
 pytest
 requests
+json
