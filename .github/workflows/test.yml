@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     container:
-      image: python:3.12-slim
+      image: mkmdockerhub/gha-aws:latest
 
     steps:
 
