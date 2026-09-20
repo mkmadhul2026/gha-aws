@@ -28,7 +28,6 @@ jobs:
           ls -la
           find . -name "requirements.txt"
 
-
       - name: Check Python
         run: python --version
 
