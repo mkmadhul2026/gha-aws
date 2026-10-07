@@ -55,3 +55,9 @@ jobs:
             --region ap-south-1 \
             --query "Reservations[*].Instances[*].[InstanceId,State.Name,Tags[?Key=='Name']|[0].Value]" \
             --output text
+      
+      - name: Upload file to S3
+        run: |
+          echo "Uploading file to S3 bucket..."
+          aws s3 cp ./README.md s3://mkm-gha-aws-test-bucket/README.md
+          echo "File uploaded successfully."
