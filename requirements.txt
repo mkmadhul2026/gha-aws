@@ -1,6 +1,6 @@
-robotframework
-robotframework-seleniumlibrary
-selenium
+#robotframework
+#robotframework-seleniumlibrary
+#selenium
 awscli
-pytest
-requests
+#pytest
+#requests
