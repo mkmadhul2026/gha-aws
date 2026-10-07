@@ -61,3 +61,8 @@ jobs:
           echo "Uploading file to S3 bucket..."
           aws s3 cp ./README.md s3://mkm-gha-aws-test-bucket/README.md
           echo "File uploaded successfully."
+
+      - name: List files in S3 bucket
+        run: |
+          echo "Listing files in S3 bucket..."
+          aws s3 ls s3://mkm-gha-aws-test-bucket/
