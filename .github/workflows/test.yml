@@ -10,12 +10,15 @@ permissions:
   id-token: write
   contents: read
 
+env:
+  DOCKER_IMAGE: mkmdockerhub/gha-aws:latest
+
 jobs:
   aws-oidc-ec2:
     runs-on: ubuntu-latest
 
-    container:
-      image: mkmdockerhub/gha-aws:latest
+    #container:
+    #  image: mkmdockerhub/gha-aws:latest
 
     steps:
 
@@ -66,3 +69,9 @@ jobs:
         run: |
           echo "Listing files in S3 bucket..."
           aws s3 ls s3://mkm-gha-aws-test-bucket/
+
+      - name: Run aws inside container
+        id: run-aws-inside-container
+        uses: gha-aws/container@main
+        with:
+          docker_image: ${{ env.DOCKER_IMAGE }}

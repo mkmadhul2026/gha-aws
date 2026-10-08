@@ -1,0 +1,16 @@
+name: container
+description: Run commands inside a Docker container
+inputs:
+  docker_image:
+    description: 'Docker image to use for the container'
+    required: true
+    default: 'mkmdockerhub/gha-aws:latest'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Run commands inside the container
+      shell: bash
+      run: |
+        echo "Running commands inside the container..."
+        docker run --rm -v ${{ github.workspace }}:/workspace -w /workspace ${{ inputs.docker_image }} bash -c "aws --version && aws sts get-caller-identity"
