@@ -72,6 +72,6 @@ jobs:
 
       - name: Run aws inside container
         id: run-aws-inside-container
-        uses: gha-aws/container@main
+        uses: mkmadhul2026/gha-aws/container@main
         with:
           docker_image: ${{ env.DOCKER_IMAGE }}
