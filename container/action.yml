@@ -22,4 +22,4 @@ runs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           ${{ inputs.docker_image }} \
-          bash -c "aws --version && aws sts get-caller-identity"
+          bash -c "aws --version && aws sts get-caller-identity && aws s3 ls && df -h && ls -la"
