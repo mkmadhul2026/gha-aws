@@ -11,6 +11,11 @@ inputs:
     required: true
     default: 'dev'
 
+  extra_args:
+    description: 'Extra arguments for the container'
+    required: false
+    default: ''
+
 runs:
   using: 'composite'
   steps:
@@ -29,6 +34,7 @@ runs:
           -e AWS_DEFAULT_REGION \
           -w /workspace \
           ${{ inputs.docker_image }} \
+          extra_args="${{ inputs.extra_args }}" \
           tail -f /dev/null)
         echo "CONTAINER_ID=$CONTAINER_ID" >> "$GITHUB_ENV"
 
