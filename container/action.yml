@@ -6,6 +6,12 @@ inputs:
     required: true
     default: 'mkmdockerhub/gha-aws:latest'
 
+  environment:
+    description: 'Environment name (e.g., dev, int, prod)'
+    required: true
+    default: 'dev'
+
+
 runs:
   using: 'composite'
   steps:
