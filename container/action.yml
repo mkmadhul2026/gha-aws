@@ -11,7 +11,6 @@ inputs:
     required: true
     default: 'dev'
 
-
 runs:
   using: 'composite'
   steps:
@@ -30,7 +29,7 @@ runs:
           -e AWS_DEFAULT_REGION \
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
-          ${{ inputs.docker_image }} \
+          ${{ inputs.docker_image }} 
           bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
 
     - name: Check if aws profile exists inside the container
