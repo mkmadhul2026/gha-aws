@@ -100,3 +100,5 @@ jobs:
         uses: mkmadhul2026/gha-aws/container@main
         with:
           docker_image: ${{ env.DOCKER_IMAGE }}
+          environment: ${{ env.ENVIRONMENT }}
+          
