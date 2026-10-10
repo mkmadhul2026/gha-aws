@@ -16,6 +16,16 @@ on:
         required: true
         default: dev
 
+      input_file:
+        description: 'Input file path'
+        required: false
+        default: '/data_mining/input.txt'
+
+      extra_args:
+        description: 'Extra arguments for the container'
+        required: false
+        default: ''
+
 permissions:
   id-token: write
   contents: read
@@ -101,4 +111,4 @@ jobs:
         with:
           docker_image: ${{ env.DOCKER_IMAGE }}
           environment: ${{ env.ENVIRONMENT }}
-          
+          extra_args: ${{ contains(inputs.input_file, 'data_mining') && 'sqlquery.sql' || '' }}
