@@ -9,11 +9,21 @@ inputs:
 runs:
   using: 'composite'
   steps:
+    - name: Check if aws profile exists
+      shell: bash
+      run: |
+        if ! aws configure list-profiles | grep -q "${{ inputs.environment }}"; then
+          echo "AWS profile '${{ inputs.environment }}' does not exist. Please configure it first."
+          exit 1
+        fi
+
     - name: Run commands inside the container
       shell: bash
       run: |
         echo "Running commands inside the container..."
         docker run --rm \
+          -v ${{ github.workspace }}:/workspace \
+          -v ~/.aws:/root/.aws \
           -e AWS_ACCESS_KEY_ID \
           -e AWS_SECRET_ACCESS_KEY \
           -e AWS_SESSION_TOKEN \
@@ -22,4 +32,4 @@ runs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           ${{ inputs.docker_image }} \
-          bash -c "aws --version && aws sts get-caller-identity && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -h && ls -la"
+          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -h && ls -la"
