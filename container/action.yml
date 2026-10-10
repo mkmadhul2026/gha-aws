@@ -30,7 +30,7 @@ runs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           ${{ inputs.docker_image }} 
-          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
+          bash -c "aws --version && aws sts get-caller-identity && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
 
     - name: Check if aws profile exists inside the container
       shell: bash
@@ -51,4 +51,4 @@ runs:
       run: |
         echo "Executing commands inside the running container..."
         docker exec -it $(docker ps -q --filter ancestor=${{ inputs.docker_image }}) \
-          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
+          bash -c "aws --version && aws sts get-caller-identity && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
