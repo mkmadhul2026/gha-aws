@@ -9,14 +9,7 @@ inputs:
 runs:
   using: 'composite'
   steps:
-    - name: Check if aws profile exists
-      shell: bash
-      run: |
-        if ! aws configure list-profiles | grep -q "${{ inputs.environment }}"; then
-          echo "AWS profile '${{ inputs.environment }}' does not exist. Please configure it first."
-          exit 1
-        fi
-
+  
     - name: Run commands inside the container
       shell: bash
       run: |
@@ -32,4 +25,25 @@ runs:
           -v ${{ github.workspace }}:/workspace \
           -w /workspace \
           ${{ inputs.docker_image }} \
-          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -h && ls -la"
+          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
+
+    - name: Check if aws profile exists inside the container
+      shell: bash
+      run: |
+        if ! aws configure list-profiles | grep -q "${{ inputs.environment }}"; then
+          echo "AWS profile '${{ inputs.environment }}' does not exist. Please configure it first."
+          exit 1
+        fi
+
+    - name: print contents of ~/.aws/credentials inside the container
+      shell: bash
+      run: |
+        echo "Contents of ~/.aws/credentials inside the container:"
+        cat ~/.aws/credentials
+
+    - name: exec commands inside the running container
+      shell: bash
+      run: |
+        echo "Executing commands inside the running container..."
+        docker exec -it $(docker ps -q --filter ancestor=${{ inputs.docker_image }}) \
+          bash -c "aws --version && aws sts get-caller-identity --profile ${{ inputs.environment }} && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"

@@ -66,11 +66,14 @@ jobs:
             aws configure set region ap-south-1 --profile "$profile"
           done
 
-      - name: Verify AWS identity
+      - name: print AWS profiles on host and its contents
         run: |
-          aws sts get-caller-identity --profile "$ENVIRONMENT"
+          echo "Configured AWS profiles:"
+          aws configure list --profile "$ENVIRONMENT"
+          echo "Contents of ~/.aws/credentials:"
+          cat ~/.aws/credentials
 
-      - name: Get EC2 Instance IDs
+      - name: Get EC2 Instance IDs on host
         run: |
             echo "=== AWS Identity ==="
             aws sts get-caller-identity --profile "$ENVIRONMENT"
@@ -81,13 +84,13 @@ jobs:
             --query "Reservations[*].Instances[*].[InstanceId,State.Name,Tags[?Key=='Name']|[0].Value]" \
             --output text
       
-      - name: Upload file to S3
+      - name: Upload file to S3 on host
         run: |
           echo "Uploading file to S3 bucket..."
           aws s3 cp ./README.md s3://mkm-gha-aws-test-bucket/README.md
           echo "File uploaded successfully."
 
-      - name: List files in S3 bucket
+      - name: List files in S3 bucket on host
         run: |
           echo "Listing files in S3 bucket..."
           aws s3 ls s3://mkm-gha-aws-test-bucket/
