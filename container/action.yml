@@ -41,5 +41,5 @@ runs:
     - name: exec commands inside the running container
       shell: bash
       run: |
-        docker exec "$CONTAINER_ID" bash -c "aws --version && aws sts get-caller-identity && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
+        docker exec "$CONTAINER_ID" bash -c "pwd && aws --version && aws sts get-caller-identity && aws s3 ls s3://mkm-gha-aws-test-bucket/ && df -hT && ls -la"
       
