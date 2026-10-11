@@ -33,7 +33,6 @@ runs:
           -e AWS_REGION \
           -e AWS_DEFAULT_REGION \
           -w /workspace \
-          ${{ inputs.extra_args }} \
           ${{ inputs.docker_image }} \
           tail -f /dev/null)
         echo "CONTAINER_ID=$CONTAINER_ID" >> "$GITHUB_ENV"

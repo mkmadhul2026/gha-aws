@@ -111,4 +111,3 @@ jobs:
         with:
           docker_image: ${{ env.DOCKER_IMAGE }}
           environment: ${{ env.ENVIRONMENT }}
-          extra_args: ${{ contains(inputs.input_file, 'data_mining') && 'sqlquery.sql' || '' }}
