@@ -107,8 +107,9 @@ jobs:
 
       - name: Check if input_file contains text mining
         run: |
-          echo "input_file: ${{ inputs.input_file }}"
-          if grep -q "mining" "${{ inputs.input_file }}"; then
+          input_file="${{ inputs.input_file || '/data_mining/input.txt' }}"
+          echo "input_file: $input_file"
+          if grep -q "mining" "$input_file"; then
             echo "The input file contains the text 'mining'."
           else
             echo "The input file does not contain the text 'mining'."
