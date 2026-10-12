@@ -107,12 +107,11 @@ jobs:
 
       - name: Check if input_file contains text mining
         run: |
-          input_file="${{ inputs.input_file }}"
-          echo "input_file: $input_file"
-          if grep -q "mining" "$input_file"; then
-            echo "The input file contains the text 'mining'."
+          echo "input_file: ${{ inputs.input_file }}"
+          if [[ "${{ inputs.input_file }}" == *"mining"* ]]; then
+            echo "The input_file contains the text 'mining'."
           else
-            echo "The input file does not contain the text 'mining'."
+            echo "The input_file does not contain the text 'mining'."
           fi
           
       - name: Run aws inside container
