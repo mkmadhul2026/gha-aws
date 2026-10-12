@@ -105,9 +105,20 @@ jobs:
           echo "Listing files in S3 bucket..."
           aws s3 ls s3://mkm-gha-aws-test-bucket/
 
+      - name: Check if input_file contains text mining
+        run: |
+          if grep -q "mining" "${{ inputs.input_file }}"; then
+            echo "The input file contains the text 'mining'."
+          else
+            echo "The input file does not contain the text 'mining'."
+          fi
+          
       - name: Run aws inside container
         id: run-aws-inside-container
         uses: mkmadhul2026/gha-aws/container@main
         with:
           docker_image: ${{ env.DOCKER_IMAGE }}
           environment: ${{ env.ENVIRONMENT }}
+
+
+      
