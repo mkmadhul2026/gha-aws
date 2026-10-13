@@ -68,7 +68,10 @@ jobs:
 
       - name: Multiple AWS profiles
         run: |
-          mkdir -p "$HOME/.aws"
+          echo "Setting up multiple AWS profiles..."
+          echo "pwd: $(pwd)"
+          echo "Home directory: $HOME"
+          mkdir -p "~/.aws"
           for profile in "$ENVIRONMENT"; do
             aws configure set aws_access_key_id "$AWS_ACCESS_KEY_ID" --profile "$profile"
             aws configure set aws_secret_access_key "$AWS_SECRET_ACCESS_KEY" --profile "$profile"
