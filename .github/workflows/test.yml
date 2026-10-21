@@ -138,7 +138,7 @@ jobs:
         with:
           token: ${{ steps.create-githubapp-token.outputs.token }}
           repository: mkmadhul2026/gha-aws-childtrigger
-          workflow_file_name: test.yml
+          workflow_file_name: workflow.yml
           ref: main
           inputs: |
             environment: ${{ env.ENVIRONMENT }}
