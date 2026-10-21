@@ -128,9 +128,9 @@ jobs:
         id: create-githubapp-token
         uses: mkmadhul2026/gha-aws/githubapp@main
         with:
-          app_id: ${{ secrets.GITHUB_APP_ID }}
-          private_key: ${{ secrets.GITHUB_APP_PRIVATE_KEY }}
-          installation_id: ${{ secrets.GITHUB_APP_INSTALLATION_ID }}
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          installation_id: ${{ secrets.APP_INSTALLATION_ID }}
 
       - name: POST dispatch to downstream job
         id: post-dispatch
