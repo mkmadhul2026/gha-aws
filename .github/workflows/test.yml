@@ -132,18 +132,24 @@ jobs:
           private_key: ${{ secrets.APP_PRIVATE_KEY }}
           installation_id: ${{ secrets.APP_INSTALLATION_ID }}
 
-      - name: POST dispatch to downstream job
-        id: post-dispatch
-        uses: mkmadhul2026/gha-aws/dispatch@main
-        with:
-          token: ${{ steps.create-githubapp-token.outputs.token }}
-          repository: mkmadhul2026/gha-aws-childtrigger
-          workflow_file_name: workflow.yml
-          ref: main
-          inputs: |
-            environment: ${{ env.ENVIRONMENT }}
-            input_file: ${{ inputs.input_file }}
-            extra_args: ${{ inputs.extra_args }}
+      - name: POST dispatch to downstream job mkmadhul2026/gha-aws-childtrigger using github api
+        id: post-dispatch-to-downstream-job
+        run: |
+          echo "Creating a dispatch event to trigger the downstream job..."
+          curl -X POST \
+            -H "Accept: application/vnd.github+json" \
+            -H "Authorization: Bearer ${{ steps.create-githubapp-token.outputs.token }}" \
+            -H "Content-Type: application/json" \
+            https://api.github.com/repos/mkmadhul2026/gha-aws-childtrigger/dispatches \
+            -d '{
+              "event_type": "trigger-downstream-job",
+              "client_payload": {
+                "environment": "'"${{ env.ENVIRONMENT }}"'",
+                "input_file": "'"${{ inputs.input_file }}"'",
+                "extra_args": "'"${{ inputs.extra_args }}"'"
+              }
+            }'
+          echo "Dispatch event created successfully."
 
 
       
