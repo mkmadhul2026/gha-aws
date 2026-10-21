@@ -129,7 +129,8 @@ jobs:
         uses: actions/create-github-app-token@v1
         with:
           app-id: ${{ secrets.APP_ID }}
-          private-key: ${{ secrets.APP_PRIVATE_KEY }}
+          private-key: |
+            ${{ secrets.GHA_AWS_PRIVATE_KEY }}
 
       - name: POST dispatch to downstream job mkmadhul2026/gha-aws-childtrigger using github api
         id: post-dispatch-to-downstream-job
