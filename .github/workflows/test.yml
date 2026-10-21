@@ -124,5 +124,26 @@ jobs:
           docker_image: ${{ env.DOCKER_IMAGE }}
           environment: ${{ env.ENVIRONMENT }}
 
+      - name: Create githubapp token
+        id: create-githubapp-token
+        uses: mkmadhul2026/gha-aws/githubapp@main
+        with:
+          app_id: ${{ secrets.GITHUB_APP_ID }}
+          private_key: ${{ secrets.GITHUB_APP_PRIVATE_KEY }}
+          installation_id: ${{ secrets.GITHUB_APP_INSTALLATION_ID }}
+
+      - name: POST dispatch to downstream job
+        id: post-dispatch
+        uses: mkmadhul2026/gha-aws/dispatch@main
+        with:
+          token: ${{ steps.create-githubapp-token.outputs.token }}
+          repository: mkmadhul2026/gha-aws-childtrigger
+          workflow_file_name: test.yml
+          ref: main
+          inputs: |
+            environment: ${{ env.ENVIRONMENT }}
+            input_file: ${{ inputs.input_file }}
+            extra_args: ${{ inputs.extra_args }}
+
 
       
