@@ -100,7 +100,7 @@ jobs:
       - name: Upload file to S3 on host
         run: |
           echo "Uploading file to S3 bucket..."
-          aws s3 cp ./README.md s3://mkm-gha-aws-test-bucket/README.md
+          #aws s3 cp ./README.md s3://mkm-gha-aws-test-bucket/README.md
           echo "File uploaded successfully."
 
       - name: List files in S3 bucket on host
@@ -130,7 +130,6 @@ jobs:
         with:
           app-id: ${{ secrets.APP_ID }}
           private-key: ${{ secrets.APP_PRIVATE_KEY }}
-          installation-id: ${{ secrets.APP_INSTALLATION_ID }}
 
       - name: POST dispatch to downstream job mkmadhul2026/gha-aws-childtrigger using github api
         id: post-dispatch-to-downstream-job
